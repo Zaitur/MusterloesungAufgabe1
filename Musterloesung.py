@@ -235,6 +235,7 @@ def __MAIN__():
             try:
                 command = int(raw_input("Please select an option: "))
             except ValueError:
+                print
         if command == 1:
             problem.update_values()
             print(problem.value_matrix)
