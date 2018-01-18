@@ -251,7 +251,7 @@ def automatic_policy_iteration(policy_matrix, value_matrix):
 #User Dialogue
 while True:
     try:
-        grid_choice = int(input("oh boi! Seems like we have some calculations to do! I have a 3by4 matrix, a 5by10 matrix and a 9by17 matrix to offer. Please indicate your choice by typing 1, 2 or 3: "))
+        grid_choice = int(raw_input("oh boi! Seems like we have some calculations to do! I have a 3by4 matrix, a 5by10 matrix and a 9by17 matrix to offer. Please indicate your choice by typing 1, 2 or 3: "))
         if (grid_choice >3 or grid_choice < 1): 
             raise ValueError
         
@@ -259,32 +259,38 @@ while True:
     except ValueError:
         print("Oh noes! you typed in a wrong number!!! please try a number between 1 and 3: ")
 
+answer = raw_input("do you want to use the default values? \n exit = 1 \n pitfall = -1 \n reward = -0.04 \n gamma = 0.9 \n (y)/(n)? ")
+if(answer=="y"):
+    value_goal = 1
+    value_pitfall = -1
+    value_penalty = -0.04
+    value_gamma = 0.9
+else:        
+    while True:
+        try:
+            value_goal = int(raw_input("Next, please tell me the value of the goal: "))
+            if (value_goal<0): 
+                raise ValueError 
+            value_pitfall = int(raw_input("Next, please tell me the value of the pitfall: "))
+            if (value_pitfall>0): 
+                raise ValueError 
+                
+            value_penalty = float(raw_input("Next, please tell me the value of the movement penalty: "))
+            if (value_penalty >0): 
+                raise ValueError 
+                
+            value_gamma = float(raw_input("Next, please tell me the value of gamma: "))
+            if (value_gamma<0 or value_gamma >1): 
+                raise ValueError 
+            break
+        except ValueError:
+            print("Oh noes! you typed in a wrong number!!! ")        
+        
+        
         
 while True:
     try:
-        value_goal = int(input("Next, please tell me the value of the goal: "))
-        if (value_goal<0): 
-            raise ValueError 
-        value_pitfall = int(input("Next, please tell me the value of the pitfall: "))
-        if (value_pitfall>0): 
-            raise ValueError 
-            
-        value_penalty = float(input("Next, please tell me the value of the movement penalty: "))
-        if (value_penalty >0): 
-            raise ValueError 
-            
-        value_gamma = float(input("Next, please tell me the value of gamma: "))
-        if (value_gamma<0 or value_gamma >1): 
-            raise ValueError 
-        break
-    except ValueError:
-        print("Oh noes! you typed in a wrong number!!! ")        
-        
-        
-        
-while True:
-    try:
-        calc_choice = int(input("Next, please choose whether you want to calculate yourself, or let me do it automatically by typing 1 or 2: "))
+        calc_choice = int(raw_input("Next, please choose whether you want to calculate yourself, or let me do it automatically by typing 1 or 2: "))
         if (calc_choice >2 or calc_choice < 1): 
             raise ValueError
         
@@ -331,14 +337,14 @@ if(calc_choice==2):
 else:
     jo = "ja"
     while (jo != "no" ):
-        jo = input("what step should I do? possible answers: evaluation, automatic, update")
-        if(jo == "evaluation"):
+        jo = raw_input("what step should I do? possible answers: evaluation, automatic, update ")
+        if(jo == "e"):
             value_matrix = policy_evaluation(policy_matrix, value_matrix)
             print(value_matrix)
-        if(jo == "automatic"):
+        if(jo == "a"):
             value_matrix = automatic_policy_evaluation(policy_matrix, value_matrix)
             print(value_matrix)
-        if(jo == "update"):
+        if(jo == "u"):
             policy_matrix = policy_update(policy_matrix, value_matrix)
             print(policy_matrix)
     print("thanks")
